@@ -1,0 +1,31 @@
+{
+  "name": "rc-522",
+  "version": "1.0.0",
+  "description": "Leitor de RFID",
+  "main": "server.js",
+  "dependencies": {
+    "rc522": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeisonCamara/RC-522.git"
+  },
+  "keywords": [
+    "RFID",
+    "cards",
+    "card",
+    "leitor",
+    "reader"
+  ],
+  "author": "geison.camara@hotmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeisonCamara/RC-522/issues"
+  },
+  "homepage": "https://github.com/GeisonCamara/RC-522#readme"
+}
