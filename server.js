@@ -13,7 +13,7 @@ var server = http.createServer(function(req, res){
     res.end('RF-522');
 });
 
-server.listen(port, id, function(){
-    console.log('Servidor iniciado em http://${id}:${port}')
+server.listen(port, ip, function(){
+    console.log('Servidor iniciado em http://${ip}:${port}')
     console.log('Para finalizar o servidor pressione CTRL+C');
 });
