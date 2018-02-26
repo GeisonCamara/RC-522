@@ -26,7 +26,7 @@ function checkUsers(data, rfid){
 var server = http.createServer(function(req, res){
     jsonfile.readFile(db, function(err, data){
         if(err) throw err;
-        var name = checkUsers(data, rfidteste);
+        var name = checkUsers(data, id);
         if(name != undefined){
             res.end('RFID: ' + name);
         } else {
