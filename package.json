@@ -6,7 +6,8 @@
   "dependencies": {
     "jsonfile": "^4.0.0",
     "rc522": "^0.2.0",
-    "rc522-rfid": "^14.1.10"
+    "rc522-rfid": "^14.1.10",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {},
   "scripts": {
