@@ -1,6 +1,6 @@
 var http = require('http');
 var port = 5000;
-var ip = '192.168.1.142';
+var ip = '192.168.1.119';
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
