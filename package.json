@@ -4,6 +4,7 @@
   "description": "Leitor de RFID",
   "main": "server.js",
   "dependencies": {
+    "jsonfile": "^4.0.0",
     "rc522": "^0.2.0",
     "rc522-rfid": "^14.1.10"
   },
