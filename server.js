@@ -4,7 +4,7 @@ var ip = '192.168.1.119';
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
-var socket = io({transports: ['websocket'], upgrade: false});
+var io = require('socket.io')(server);
 var id = 0;
 var i = 0;
 
@@ -36,6 +36,7 @@ var server = http.createServer(function(req, res){
     });
 });
 
+var socket = io({transports: ['websocket'], upgrade: false});
 io.on('connection', function(socket) {
 
     console.log(' %s sockets connected', io.engine.clientsCount);
