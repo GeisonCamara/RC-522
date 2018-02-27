@@ -36,7 +36,6 @@ var server = http.createServer(function(req, res){
     });
 });
 
-var socket = io({transports: ['websocket'], upgrade: false});
 io.on('connection', function(socket) {
 
     console.log(' %s sockets connected', io.engine.clientsCount);
