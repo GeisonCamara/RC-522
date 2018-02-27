@@ -4,7 +4,7 @@ var ip = '192.168.1.119';
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
-var io = require('socket.io')(server);
+var socket = io({transports: ['websocket'], upgrade: false});
 var id = 0;
 var i = 0;
 
