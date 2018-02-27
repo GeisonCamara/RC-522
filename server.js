@@ -23,6 +23,14 @@ function checkUsers(data, rfid){
     }
 }
 
+
+io.on('connection', function(socket) {
+    console.log(' %s sockets connected', io.engine.clientsCount);
+    socket.on('disconnect', function() {
+        console.log("disconnect: ", socket.id);
+    });
+});
+
 var server = http.createServer(function(req, res){
     jsonfile.readFile(db, function(err, data){
         if(err) throw err;
@@ -33,15 +41,6 @@ var server = http.createServer(function(req, res){
         } else {
             res.end('RFID não cadastrado');
         }
-    });
-});
-
-io.on('connection', function(socket) {
-
-    console.log(' %s sockets connected', io.engine.clientsCount);
-
-    socket.on('disconnect', function() {
-        console.log("disconnect: ", socket.id);
     });
 });
 
