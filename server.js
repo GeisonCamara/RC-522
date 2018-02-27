@@ -34,7 +34,9 @@ var server = http.createServer(function(req, res){
         } else {
             show = 'RFID não cadastrado';
         }
-        res.end(show);
+        io.on('connection', function(socket){
+            io.emit('broadcast', res.end(show));
+          });
     });
 });
 
