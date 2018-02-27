@@ -37,7 +37,8 @@ var server = http.createServer(function(req, res){
 });
 
 io.on('connection', function(socket){
-    socket.broadcast.emit('reload', {});
+    socket.emit('user', name);
+    socket.broadcast.emit('user', name);
 });
 
 server.listen(port, ip, function(){
