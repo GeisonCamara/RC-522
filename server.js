@@ -1,3 +1,5 @@
+import { Socket } from 'dgram';
+
 var http = require('http');
 var port = 5000;
 var ip = '192.168.1.119';
@@ -36,10 +38,9 @@ var server = http.createServer(function(req, res){
     });
 });
 
-io.on('connection', function(client){
-  client.on('event', function(data){});
-  client.on('disconnect', function(){});
-});
+io.on('connection', function(socket){
+    console.log('a user connected');
+  });
 
 server.listen(port, ip, function(){
     console.log('Servidor iniciado em http://${ip}:${port}')
