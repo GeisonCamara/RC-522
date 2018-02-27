@@ -36,9 +36,14 @@ var server = http.createServer(function(req, res){
     });
 });
 
-io.on('connection', function(socket){
-    console.log('Um usuário foi conectado ao servidor');
-  });
+io.on('connection', function(socket) {
+
+    console.log(' %s sockets connected', io.engine.clientsCount);
+
+    socket.on('disconnect', function() {
+        console.log("disconnect: ", socket.id);
+    });
+});
 
 server.listen(port, ip, function(){
     console.log('Servidor iniciado em http://${ip}:${port}')
