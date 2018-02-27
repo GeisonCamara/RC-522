@@ -1,13 +1,17 @@
+'use strict';
 var http = require('http');
 var port = 5000;
-var ip = '192.168.1.119';
+var ip = '192.168.1.142';
+var io = require('socket.io')(server);
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
-var io = require('socket.io')(server);
-var id = 0;
+var id = "90152629";
 var i = 0;
 var show;
+var connectCounter = 0;
+var kk;
+var count = 1;
 
 console.log("Pronto!");
 
@@ -30,23 +34,21 @@ var server = http.createServer(function(req, res){
         var name = checkUsers(data, id);
         console.log(name);
         if(name != undefined){
-            show = 'RFID: ' + name;
+            res.end('RFID: ' + name);
         } else {
-            show = 'RFID não cadastrado';
+            res.end('RFID não cadastrado');
         }
     });
 });
 
-io.sockets.on('connection', function(socket) {
-    socket.object = socket.id;
-        socket.on('updateObject', function(data) {
-            io.sockets.clients('room').forEach(function (socket, data) {
-                res.end(show);
-            });
-        });
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
     });
+  });
 
 server.listen(port, ip, function(){
-    console.log('Servidor iniciado em http://${ip}:${port}')
+    console.log('Servidor iniciado em http://' + ip + ':' + port);
     console.log('Para finalizar o servidor pressione CTRL+C');
 });
