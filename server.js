@@ -23,12 +23,6 @@ function checkUsers(data, rfid){
     }
 }
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('request', /* */); // emit an event to the socket
-  io.emit('broadcast', /* */); // emit an event to all connected sockets
-  socket.on('reply', function(){ /* */ }); // listen to the event
-});
-
 var server = http.createServer(function(req, res){
     jsonfile.readFile(db, function(err, data){
         if(err) throw err;
@@ -36,12 +30,14 @@ var server = http.createServer(function(req, res){
         console.log(name);
         if(name != undefined){
             res.end('RFID: ' + name);
-            io.sockets.emit('reload', {});
         } else {
             res.end('RFID não cadastrado');
-            io.sockets.emit('reload', {});
         }
     });
+});
+
+io.on('connection', function(socket){
+    socket.broadcast.emit('reload', {});
 });
 
 server.listen(port, ip, function(){
