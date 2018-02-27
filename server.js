@@ -1,5 +1,3 @@
-import { Socket } from 'dgram';
-
 var http = require('http');
 var port = 5000;
 var ip = '192.168.1.119';
