@@ -34,18 +34,14 @@ var server = http.createServer(function(req, res){
         } else {
             show = 'RFID não cadastrado';
         }
-        io.on('connection', function(socket){
-            io.emit('broadcast', res.end(show));
-          });
+        res.end(show);
     });
 });
 
-io.on('connection', function(socket) {
-    console.log(' %s sockets connected', io.engine.clientsCount);
-    socket.on('disconnect', function() {
-        console.log("disconnect: ", socket.id);
-    });
-});
+io.on('connection', function(socket){
+    io.emit('broadcast', show); // emit an event to all connected sockets
+    socket.on('reply', function(){ show }); // listen to the event
+  });
 
 server.listen(port, ip, function(){
     console.log('Servidor iniciado em http://${ip}:${port}')
