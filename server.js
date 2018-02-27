@@ -1,6 +1,6 @@
 var http = require('http');
 var port = 5000;
-var ip = '192.168.1.119';
+var ip = '192.168.1.142';
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
@@ -34,14 +34,18 @@ var server = http.createServer(function(req, res){
         } else {
             show = 'RFID não cadastrado';
         }
-        res.end(show);
     });
 });
 
-io.on('connection', function(socket){
-    io.emit('broadcast', show); // emit an event to all connected sockets
-    socket.on('reply', function(){ show }); // listen to the event
-  });
+io.sockets.on('connection', function(socket) {
+    socket.object = socket.id;
+    
+        socket.on('updateObject', function(data) {
+            io.sockets.clients('room').forEach(function (socket, data) {
+                res.end(show);
+            });
+        });
+    });
 
 server.listen(port, ip, function(){
     console.log('Servidor iniciado em http://${ip}:${port}')
