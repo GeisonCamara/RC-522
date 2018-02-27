@@ -7,6 +7,7 @@ var db = './database/db.json';
 var io = require('socket.io')(server);
 var id = 0;
 var i = 0;
+var show;
 
 console.log("Pronto!");
 
@@ -23,24 +24,24 @@ function checkUsers(data, rfid){
     }
 }
 
-
-io.on('connection', function(socket) {
-    console.log(' %s sockets connected', io.engine.clientsCount);
-    socket.on('disconnect', function() {
-        console.log("disconnect: ", socket.id);
-    });
-});
-
 var server = http.createServer(function(req, res){
     jsonfile.readFile(db, function(err, data){
         if(err) throw err;
         var name = checkUsers(data, id);
         console.log(name);
         if(name != undefined){
-            res.end('RFID: ' + name);
+            show = 'RFID: ' + name;
         } else {
-            res.end('RFID não cadastrado');
+            show = 'RFID não cadastrado';
         }
+        res.end(show);
+    });
+});
+
+io.on('connection', function(socket) {
+    console.log(' %s sockets connected', io.engine.clientsCount);
+    socket.on('disconnect', function() {
+        console.log("disconnect: ", socket.id);
     });
 });
 
