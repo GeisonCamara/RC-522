@@ -36,6 +36,11 @@ var server = http.createServer(function(req, res){
     });
 });
 
+io.on('connection', function(client){
+  client.on('event', function(data){});
+  client.on('disconnect', function(){});
+});
+
 server.listen(port, ip, function(){
     console.log('Servidor iniciado em http://${ip}:${port}')
     console.log('Para finalizar o servidor pressione CTRL+C');
