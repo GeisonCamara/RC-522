@@ -39,7 +39,7 @@ var server = http.createServer(function(req, res){
 });
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('Um usuário foi conectado ao servidor');
   });
 
 server.listen(port, ip, function(){
