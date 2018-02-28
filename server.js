@@ -4,7 +4,7 @@ var port = 5000;
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
-var id = "90152629";
+var id = "0";
 
 var app = express();
 var http = require('http').Server(app);
@@ -22,18 +22,19 @@ function checkUsers(data, rfid){
 }
 
 app.get('/', function(req, res){
-    rc522(function(rfidSerialNumber){
-        jsonfile.readFile(db, function(err, data){
-            if(err) throw err;
-            var name = checkUsers(data, rfidSerialNumber);
-            console.log(name);
-            if(name != undefined){
-                res.render('index', {rfid: name});
-            } else {
-                res.render('index', {rfid: 'Não encontrado'});
-            }
-        });
+    jsonfile.readFile(db, function(err, data){
+        if(err) throw err;
+        var name = checkUsers(data, id);
+        if(name != undefined){
+            res.render('index', {rfid: name});
+        } else {
+            res.render('index', {rfid: 'Não encontrado'});
+        }
     });
+});
+
+rc522(function(rfidSerialNumber){
+    id = rfidSerialNumber;
 });
 
 io.on('connection', function(socket){
