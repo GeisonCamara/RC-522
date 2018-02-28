@@ -33,15 +33,19 @@ app.get('/', function(req, res){
     });
 });
 
-rc522(function(rfidSerialNumber){
+rc522(function(rfidSerialNumber, socket){
     console.log('Lido: ' + rfidSerialNumber);
     id = rfidSerialNumber;
+    socket.emit('rfid', id);
 });
 
 io.on('connection', function(socket){
     console.log('Um usuário se conectou!');
     socket.on('disconnect', function(){
         console.log('Um usuário se desconectou!');
+    });
+    socket.on('rfid', function(rfid){
+        console.log('Última leitura: ' + rfid);
     });
 });
 
