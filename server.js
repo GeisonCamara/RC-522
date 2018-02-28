@@ -46,7 +46,7 @@ io.on('connection', function(socket){
 rc522(function(rfidSerialNumber, io){
     console.log('Lido: ' + rfidSerialNumber);
     id = rfidSerialNumber;
-    io.socket.emit('rfid', id);
+    io.sockets.emit('rfid', id);
 });
 
 
