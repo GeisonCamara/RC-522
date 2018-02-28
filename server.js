@@ -34,6 +34,7 @@ app.get('/', function(req, res){
 });
 
 rc522(function(rfidSerialNumber){
+    console.log('Lido: ' + rfidSerialNumber);
     id = rfidSerialNumber;
 });
 
