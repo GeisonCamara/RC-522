@@ -39,7 +39,10 @@ rc522(function(rfidSerialNumber){
 });
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('Um usuário se conectou!');
+    socket.on('disconnect', function(){
+        console.log('Um usuário se desconectou!');
+    });
 });
 
 http.listen(port, function(){
