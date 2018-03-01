@@ -1,5 +1,7 @@
+var http = require('http');
 var express = require('express');
-var exphbs = require('express-handlebars');
+var app = express();
+var exphbs = require('expre ss-handlebars');
 var port = 5000;
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
@@ -8,9 +10,8 @@ var db = './database/db.json';
 var id = 0;
 var msg = '';
 
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -30,7 +31,7 @@ app.get('/', function(req, res){
     res.render('index', {rfid: msg});
 });
 
-io.on('connection', function(socket){
+io.sockets.on('connection', function(socket){
     console.log('Um usuário se conectou!');
     socket.on('disconnect', function(){
         console.log('Um usuário se desconectou!');
@@ -52,8 +53,7 @@ rc522(function(rfidSerialNumber){
         console.log('_______________________________________\n\n');
     });
 
-    var socket = io();
-    socket.emit('read rfid', id);
+    io.sockets.emit('read rfid', id);
 });
 
 http.listen(port, function(){
