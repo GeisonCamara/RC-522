@@ -1,7 +1,7 @@
 var http = require('http');
 var express = require('express');
 var app = express();
-var exphbs = require('expre ss-handlebars');
+var exphbs = require('express-handlebars');
 var port = 5000;
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
