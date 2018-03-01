@@ -1,17 +1,28 @@
+var http = require('http');
 var express = require('express');
-var exphbs = require('express-handlebars');
+var app = express();
+var exphbs = require('express3-handlebars');
+var path = require('path');
+var server = http.createServer(app);
 var port = 5000;
-var rc522 = require("rc522");
+var io = require('socket.io').listen(server);
+
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
+var rc522 = require("rc522");
 var id = "0";
 
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.configure(function(){
+    app.set('port', process.env.PORT || port);
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'handlebars');
+    // app.use(express.favicon());
+    app.use(express.logger('dev'));
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(express.static(path.join(__dirname, 'public')));
+});
 
 function checkUsers(data, rfid){
     for(var i = 0; i < data.users.length; i++){
@@ -33,7 +44,7 @@ app.get('/', function(req, res){
     });
 });
 
-io.on('connection', function(socket){
+io.sockets.on('connection', function(socket){
     console.log('Um usuário se conectou!');
     socket.on('disconnect', function(){
         console.log('Um usuário se desconectou!');
@@ -45,9 +56,10 @@ io.on('connection', function(socket){
 
 rc522(function(rfidSerialNumber){
     id = rfidSerialNumber;
-    console.log('Lido: ' + id);
-    var socket = io();
-    socket.emit('read rfid', id);
+    io.emit('read rfid', function(id){
+        console.log('Lido: ' + id);
+    });
+    // socket.emit('read rfid', id);
 });
 
 
