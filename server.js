@@ -31,10 +31,11 @@ app.get('/', function(req, res){
     res.render('index', {rfid: msg});
 });
 
+var conections = 0;
 io.sockets.on('connection', function(socket){
-    console.log('Um usuário se conectou!');
+    console.log('Usuários conectados: ' + (conections + 1));
     socket.on('disconnect', function(){
-        console.log('Um usuário se desconectou!');
+        console.log('Usuários conectados: ' + (conections - 1));
     });
 });
 
@@ -43,13 +44,12 @@ rc522(function(rfidSerialNumber){
         if(err) throw err;
         id = rfidSerialNumber;
         msg = checkUsers(data, id);
+        io.sockets.emit('read rfid', msg);
         console.log('_______________________________________');
         console.log(id);
         console.log(msg);
         console.log('_______________________________________\n\n');
     });
-
-    io.sockets.emit('read rfid', id);
 });
 
 server.listen(port, function(){
