@@ -30,7 +30,10 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('Um usuário se conectou!');
+    socket.on('disconnect', function(){
+        console.log('Um usuário se desconectou!');
+    })
 });
 
 rc522(function(rfidSerialNumber){
