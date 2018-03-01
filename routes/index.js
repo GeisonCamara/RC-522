@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var jsonfile = require('jsonfile');
+var db = './database/db.json';
+var id = 0;
 
 function checkUsers(data, rfid){
     for(var i = 0; i < data.users.length; i++){

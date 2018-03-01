@@ -12,10 +12,6 @@ var io = require('socket.io').listen(server);
 var rfid = require('./controllers/rfid');
 var helpers = require('./helpers/helpers');
 
-var jsonfile = require('jsonfile');
-var db = './database/db.json';
-var id = "0";
-
 var hbs = exphbs.create({
     defaultLayout: 'main',
     helpers: helpers
