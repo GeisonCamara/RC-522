@@ -42,7 +42,7 @@ io.sockets.on('connection', function(socket){
     });
 });
 
-rc522(function(rfidSerialNumber, io){
+rc522(function(rfidSerialNumber){
     jsonfile.readFile(db, function(err, data){
         if(err) throw err;
         id = rfidSerialNumber;
