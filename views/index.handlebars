@@ -1,7 +1,6 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-<script>
   $(function () {
     var socket = io();
     socket.on('read rfid', function(userName){;
@@ -9,6 +8,5 @@
         $('#userName').val(userName);
     });
   });
-</script>
 </script>
 <h1>RFID: <span id="userName">{{rfid}}</span></h1>
