@@ -1,5 +1,12 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
+<script>
+  $(function () {
     var socket = io();
+    socket.on('read rfid', userName);
+      $('#userName').val(userName);
+    });
+  });
 </script>
-<h1>RFID: {{rfid}}</h1>
+</script>
+<h1>RFID: <span id="userName">{{rfid}}</span></h1>
