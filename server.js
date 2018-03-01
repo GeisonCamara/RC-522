@@ -41,6 +41,10 @@ rc522(function(rfidSerialNumber){
         if(err) throw err;
         id = rfidSerialNumber;
         msg = checkUsers(data, id);
+        console.log('_______________________________________');
+        console.log(id);
+        console.log(msg);
+        console.log('_______________________________________');
     });
 });
 
