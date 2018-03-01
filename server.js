@@ -38,11 +38,11 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('read rfid', function(rfid){
-        console.log(rfid);
+        console.log("Último rfid lido: " + rfid);
     });
 });
 
-rc522(function(rfidSerialNumber){
+rc522(function(rfidSerialNumber, io){
     jsonfile.readFile(db, function(err, data){
         if(err) throw err;
         id = rfidSerialNumber;
