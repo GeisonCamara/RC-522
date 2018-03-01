@@ -16,13 +16,14 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 function checkUsers(data, rfid){
+    var userName = "";
     for(var i = 0; i < data.users.length ; i++){
         if(data.users[i].rfid == rfid){
-            return data.users[i].nome;
+            userName =  data.users[i].nome;
         }
-
-        return 'não encontrado';
     }
+
+    return userName != "" ? userName : "Não encontrado";
 }
 
 app.get('/', function(req, res){
