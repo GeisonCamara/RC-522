@@ -4,8 +4,8 @@
 <script>
   $(function () {
     var socket = io();
-    socket.on('read rfid', userName);
-
+    socket.on('read rfid', function(userName){;
+        console.log(rserName);
         $('#userName').val(userName);
     });
   });
