@@ -49,9 +49,7 @@ rc522(function(rfidSerialNumber){
         console.log('_______________________________________\n\n');
     });
 
-    io.sockets.emit('read rfid', function (socket) {
-        socket.send('hi');
-    });
+    io.sockets.emit('read rfid', id);
 });
 
 server.listen(port, function(){
