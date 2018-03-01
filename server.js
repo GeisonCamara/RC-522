@@ -1,47 +1,74 @@
 var http = require('http');
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+var compress = require('compression');
 var exphbs = require('express-handlebars');
+var logger = require('morgan');
 var path = require('path');
 var server = http.createServer(app);
 var port = 5000;
 var io = require('socket.io').listen(server);
+var rfid = require('./controllers/rfid');
+var helpers = require('./helpers/helpers');
 
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
-var rc522 = require("rc522");
 var id = "0";
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.configure(function(){
-    app.set('port', process.env.PORT || port);
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'handlebars');
-    // app.use(express.favicon());
-    app.use(express.logger('dev'));
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(express.static(path.join(__dirname, 'public')));
+var hbs = exphbs.create({
+    defaultLayout: 'main',
+    helpers: helpers
 });
 
-function checkUsers(data, rfid){
-    for(var i = 0; i < data.users.length; i++){
-        if(data.users[i].rfid == rfid){
-            return data.users[i].nome;
-        }
+hbs.getTemplates('views/partials/', {
+    cache: app.enabled('view cache'),
+    precompiled: true
+}).then(function(templates){
+    var extRegex = new RegExp(hbs.extname, '$');
+    var partials = {};
+    Object.keys(templates).map(function(name){
+        partials[name.replace(extRegex, '')] = templates[name];
+        return partials;
+    });
+    if (templates.length) {
+        hbs.handlebars.partials = partials;
     }
+});
+
+var index = require('./routes/index');
+
+app.use(logger('common'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compress());
+app.use(helpers.relativePath() + '/content', express.static(path.join(__dirname, '..', 'content')));
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+if (app.get('env') !== 'development') {
+    app.enable('view cache');
 }
 
-app.get('/', function(req, res){
-    jsonfile.readFile(db, function(err, data){
-        if(err) throw err;
-        var name = checkUsers(data, id);
-        if(name != undefined){
-            res.render('index', {rfid: name});
-        } else {
-            res.render('index', {rfid: 'Não encontrado'});
-        }
-    });
+app.use(helpers.relativePath() + '/', index);
+
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+app.use((error, request, response) => {
+    // set locals, only providing error in development
+    const err = error;
+    const req = request;
+    const res = response;
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 io.sockets.on('connection', function(socket){
@@ -54,15 +81,12 @@ io.sockets.on('connection', function(socket){
     });
 });
 
-rc522(function(rfidSerialNumber){
-    id = rfidSerialNumber;
-    io.emit('read rfid', function(id){
-        console.log('Lido: ' + id);
-    });
-    // socket.emit('read rfid', id);
-});
+app.use(rfid);
 
-
-http.listen(port, function(){
-    console.log('Servidor iniciado: http://localhost:' + port);
+app.set('port', process.env.PORT || 3000);
+app.listen(app.get('port'), () => {
+  console.log(`WebService has started on ${app.get('port')} running in ${app.get('env')} mode`);
+  if (app.get('env') === 'development') {
+    console.log('PLEASE NOTE: your webservice is running not in a production mode!');
+  }
 });
