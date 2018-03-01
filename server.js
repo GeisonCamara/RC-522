@@ -38,15 +38,16 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         console.log('Um usuário se desconectou!');
     });
-    socket.on('rfid', function(rfid){
+    socket.on('read rfid', function(rfid){
         console.log('Última leitura: ' + rfid);
     });
 });
 
-rc522(function(rfidSerialNumber, io){
-    console.log('Lido: ' + rfidSerialNumber);
+rc522(function(rfidSerialNumber){
     id = rfidSerialNumber;
-    io.sockets.emit('rfid', id);
+    console.log('Lido: ' + id);
+    var socket = io();
+    socket.emit('read rfid', id);
 });
 
 
