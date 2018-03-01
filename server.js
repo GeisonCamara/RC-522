@@ -19,7 +19,7 @@ function checkUsers(data, rfid){
     console.log(data);
     console.log(rfid);
     for(var i = 0; i < data.users.length; i++){
-        console.log("data" + i + ": " + data.users[i].rfid + "e rfid: " + rfid + " == " + data.users[i].rfid == rfid);
+        console.log(data.users[i].rfid);
         if(data.users[i].rfid == rfid){
             return data.users[i].nome;
         } else {
