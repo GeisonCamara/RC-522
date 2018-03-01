@@ -21,16 +21,18 @@ function checkUsers(data, rfid){
     console.log(data);
     console.log(rfid);
     console.log('_______________________________________');
-    for(var i = 0; i < data.users.length; i++){
-        console.log('_______________________________________');
-        console.log('4 - itens');
-        console.log(i + ': ' + data.users[i].rfid);
-        console.log('_______________________________________');
-        if(data.users[i].rfid == rfid){
-            return data.users[i].nome;
-        } else {
-            return 'Não encontrado';
-        }
+    for(var i = 0; i < data.users.length ; i++){
+        console.log(i);
+        console.log(data.users.length);
+        // console.log('_______________________________________');
+        // console.log('4 - itens');
+        // console.log(i + ': ' + data.users[i].rfid);
+        // console.log('_______________________________________');
+        // if(data.users[i].rfid == rfid){
+        //     return data.users[i].nome;
+        // } else {
+        //     return 'Não encontrado';
+        // }
     }
 }
 
