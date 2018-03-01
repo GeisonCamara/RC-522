@@ -56,6 +56,6 @@ rc522(function(rfidSerialNumber){
     io.sockets.emit('read rfid', id);
 });
 
-http.listen(port, function(){
+server.listen(port, function(){
     console.log('Servidor iniciado: http://localhost:' + port);
 });
