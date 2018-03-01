@@ -34,7 +34,11 @@ io.on('connection', function(socket){
     console.log('Um usuário se conectou!');
     socket.on('disconnect', function(){
         console.log('Um usuário se desconectou!');
-    })
+    });
+
+    socket.on('read rfid', function(rfid){
+        console.log(rfid);
+    });
 });
 
 rc522(function(rfidSerialNumber){
@@ -45,8 +49,11 @@ rc522(function(rfidSerialNumber){
         console.log('_______________________________________');
         console.log(id);
         console.log(msg);
-        console.log('_______________________________________');
+        console.log('_______________________________________\n\n');
     });
+
+    var socket = io();
+    socket.emit('read rfid', id);
 });
 
 http.listen(port, function(){
