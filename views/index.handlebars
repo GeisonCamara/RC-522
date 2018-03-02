@@ -5,9 +5,11 @@
     var socket = io();
     socket.on('read rfid', function(userName){;
         $('#userName').html('').html(userName);
+    });
+    socket.on('generated notification', function(responsavel){
         notifier.notify({
-        title: 'Responsável pelo café:',
-        message: userName
+        title: 'Responsável pelo café',
+        message: responsavel
     });
     });
   });
