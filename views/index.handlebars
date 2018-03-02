@@ -1,17 +1,17 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  $(function () {
-    var socket = io();
-    socket.on('read rfid', function(userName){;
-        $('#userName').html('').html(userName);
+    $(function () {
+        var socket = io();
+        socket.on('read rfid', function(userName){;
+            $('#userName').html('').html(userName);
+        });
+        socket.on('generated notification', function(responsavel){
+            notifier.notify({
+                title: 'Responsável pelo café',
+                message: responsavel
+            });
+        });
     });
-    socket.on('generated notification', function(responsavel){
-        notifier.notify({
-        title: 'Responsável pelo café',
-        message: responsavel
-    });
-    });
-  });
 </script>
 <h1>RFID: <span id="userName">{{rfid}}</span></h1>

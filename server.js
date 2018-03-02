@@ -7,7 +7,6 @@ var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
 
-var path = require('path');
 var notifier = require('node-notifier');
 
 var id = 0;
@@ -52,7 +51,7 @@ rc522(function(rfidSerialNumber){
         id = rfidSerialNumber;
         msg = checkUsers(data, id);
         io.sockets.emit('read rfid', msg);
-        io.sockets.emit('generated notification', msg);
+        io.emit('generated notification', msg);
         console.log('_______________________________________');
         console.log(id);
         console.log(msg);
