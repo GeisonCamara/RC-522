@@ -7,6 +7,9 @@ var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
 
+var path = require('path');
+var notifier = require('node-notifier');
+
 var id = 0;
 var msg = '';
 
@@ -33,6 +36,10 @@ app.get('/', function(req, res){
 
 var conections = 0;
 io.sockets.on('connection', function(socket){
+    notifier.notify({
+        title: 'Um meliante se conectou',
+        message: 'KKKKKKK'
+    });
     console.log('Usuários conectados: ' + (++conections));
     socket.on('disconnect', function(){
         console.log('Usuários conectados: ' + (--conections));
