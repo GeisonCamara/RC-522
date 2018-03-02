@@ -33,9 +33,9 @@ app.get('/', function(req, res){
 
 var conections = 0;
 io.sockets.on('connection', function(socket){
-    console.log('Usuários conectados: ' + (conections + 1));
+    console.log('Usuários conectados: ' + (++conections));
     socket.on('disconnect', function(){
-        console.log('Usuários conectados: ' + (conections - 1));
+        console.log('Usuários conectados: ' + (--conections));
     });
 });
 
