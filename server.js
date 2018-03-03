@@ -35,10 +35,6 @@ app.get('/', function(req, res){
 
 var conections = 0;
 io.sockets.on('connection', function(socket){
-    notifier.notify({
-        title: 'Um meliante se conectou',
-        message: 'KKKKKKK'
-    });
     console.log('Usuários conectados: ' + (++conections));
     socket.on('disconnect', function(){
         console.log('Usuários conectados: ' + (--conections));
