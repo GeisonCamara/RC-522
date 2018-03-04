@@ -31,16 +31,17 @@
             });
             myNotification.show();
         }
+
+        if (!Notify.needsPermission) {
+            doNotification();
+        } else if (Notify.isSupported()) {
+            Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+        }
         
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
-            if (!Notify.needsPermission) {
-                doNotification();
-            } else if (Notify.isSupported()) {
-                Notify.requestPermission(onPermissionGranted, onPermissionDenied);
-            }
         });
     });
 </script>
-<h1>RFID: <span id="userName">{{rfid}}</span></h1>
+<h1>RFID: <span id="userName"></span></h1>
