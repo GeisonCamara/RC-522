@@ -7,9 +7,30 @@ var port = 7000;
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
+var helpers = require('./helpers/helpers');
 
 var id = 0;
 var msg = '';
+
+var hbs = exphbs.create({
+    defaultLayout: 'main',
+    helpers: helpers
+});
+
+hbs.getTemplates('views/partials/', {
+    cache: app.enabled('view cache'),
+    precompiled: true
+}).then(function(templates){
+    var extRegex = new RegExp(hbs.extname, '$');
+    var partials = {};
+    Object.keys(templates).map(function(name){
+        partials[name.replace(extRegex, '')] = templates[name];
+        return partials;
+    });
+    if (templates.length) {
+        hbs.handlebars.partials = partials;
+    }
+});
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
