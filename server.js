@@ -19,8 +19,9 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, '/content')));
-app.use('/content', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
-app.use('/content', express.static(path.join(__dirname, '/node_modules/notifyjs/dist')));
+app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+app.use('/notify', express.static(path.join(__dirname, '/node_modules/notifyjs/dist')));
+app.use('/js', express.static(path.joint(__dirname, '/content')));
 
 console.log(path.join(__dirname, '/node_modules/jquery/dist'));
 console.log(path.join(__dirname, '/node_modules/notifyjs/dist'));
