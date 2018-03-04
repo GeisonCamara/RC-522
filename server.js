@@ -17,7 +17,7 @@ var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
-console.log(path.join(__dirname, 'content'));
+
 app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 app.use('/notify', express.static(path.join(__dirname, '/node_modules/notifyjs/dist')));
 
