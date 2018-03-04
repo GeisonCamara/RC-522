@@ -17,21 +17,6 @@ var hbs = exphbs.create({
     helpers: helpers
 });
 
-hbs.getTemplates('views/partials/', {
-    cache: app.enabled('view cache'),
-    precompiled: true
-}).then(function(templates){
-    var extRegex = new RegExp(hbs.extname, '$');
-    var partials = {};
-    Object.keys(templates).map(function(name){
-        partials[name.replace(extRegex, '')] = templates[name];
-        return partials;
-    });
-    if (templates.length) {
-        hbs.handlebars.partials = partials;
-    }
-});
-
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
