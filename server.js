@@ -12,11 +12,6 @@ var helpers = require('./helpers/helpers');
 var id = 0;
 var msg = '';
 
-var hbs = exphbs.create({
-    defaultLayout: 'main',
-    helpers: helpers
-});
-
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
