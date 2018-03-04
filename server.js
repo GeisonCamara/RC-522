@@ -18,8 +18,8 @@ var io = require('socket.io').listen(server);
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 console.log(path.join(__dirname, 'content'));
-app.use('/content', express.static(path.join(__dirname, 'content')));
-// app.use('/notifyjs', express.static(path.join(__dirname, 'node_modules/notifyjs/dist/')));
+app.use('/content', express.static(path.join(__dirname, '/content')));
+app.use('/notifyjs', express.static(path.join(__dirname, '/node_modules/notifyjs/dist')));
 
 function checkUsers(data, rfid){
     var userName = "";
