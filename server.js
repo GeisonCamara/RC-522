@@ -2,12 +2,11 @@ var http = require('http');
 var express = require('express');
 var app = express();
 var exphbs = require('express-handlebars');
+var path = require('path');
 var port = 7000;
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
-
-var notifier = require('node-notifier');
 
 var id = 0;
 var msg = '';
@@ -17,6 +16,7 @@ var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+app.use(express.static(path.join(__dirname, 'content')));
 
 function checkUsers(data, rfid){
     var userName = "";
