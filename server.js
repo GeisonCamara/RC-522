@@ -17,9 +17,9 @@ var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
-app.use('/jquery', express.static(__dirname, '/content/libs/jquery/dist/'));
-console.log(express.static(__dirname, '/content/libs/jquery/dist/'));
-app.use('/notifyjs', express.static(__dirname, '/node_modules/notifyjs/dist/'));
+app.use('/jquery', express.static(path.join(__dirname, 'content/libs/jquery/dist/')));
+app.use('/notifyjs', express.static(path.join(__dirname, 'node_modules/notifyjs/dist/')));
+console.log(path.join(__dirname, 'node_modules/notifyjs/dist/'));
 
 function checkUsers(data, rfid){
     var userName = "";
