@@ -1,5 +1,5 @@
 <script>
-    $(function () {
+    document.getElementById('my-button').addEventListener('click', function () {
         function onShowNotification () {
             console.log('notification is shown!');
         }
@@ -31,13 +31,14 @@
             });
             myNotification.show();
         }
-
         if (!Notify.needsPermission) {
             doNotification();
         } else if (Notify.isSupported()) {
             Notify.requestPermission(onPermissionGranted, onPermissionDenied);
         }
-        
+    }, false);
+
+    $(function () {        
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
