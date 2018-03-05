@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var exphbs = require('express-handlebars');
 var path = require('path');
-var port = 7000;
+var port = 5000;
 var rc522 = require("rc522");
 var jsonfile = require('jsonfile');
 var db = './database/db.json';
@@ -32,7 +32,6 @@ function checkUsers(data, rfid){
             userName =  data.users[i].nome;
         }
     }
-
     return userName != "" ? userName : "Não encontrado";
 }
 
@@ -54,7 +53,6 @@ rc522(function(rfidSerialNumber){
         id = rfidSerialNumber;
         msg = checkUsers(data, id);
         io.sockets.emit('read rfid', msg);
-        io.emit('generated notification', msg);
         console.log('_______________________________________');
         console.log(id);
         console.log(msg);
