@@ -46,9 +46,7 @@ function checkUsers(data, rfid){
 }
 
 app.get('/', function(req, res){
-    if (msg != ''){
-        res.render('index', {rfid: msg});
-    }
+    res.render('index', {rfid: msg});
 });
 
 var conections = 0;
