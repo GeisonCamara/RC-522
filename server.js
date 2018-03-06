@@ -1,10 +1,10 @@
-var https = require('https');
+var http = require('http');
 var express = require('express');
 var app = express();
-var fs = require('fs');
-var key = fs.readFileSync('encryption/private.key');
-var cert = fs.readFileSync( 'encryption/primary.crt' );
-var ca = fs.readFileSync( 'encryption/intermediate.crt' );
+// var fs = require('fs');
+// var key = fs.readFileSync('encryption/private.key');
+// var cert = fs.readFileSync( 'encryption/primary.crt');
+// var ca = fs.readFileSync( 'encryption/intermediate.crt');
 
 var exphbs = require('express-handlebars');
 var path = require('path');
@@ -16,13 +16,13 @@ var helpers = require('./helpers/helpers');
 
 var id = 0;
 var msg = '';
-var options = {
-    key: key,
-    cert: cert,
-    ca: ca
-  };
+// var options = {
+//     key: key,
+//     cert: cert,
+//     ca: ca
+//   };
 
-var server = https.createServer(options, app);
+var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
