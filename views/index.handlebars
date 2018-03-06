@@ -21,7 +21,7 @@
         }
         function doNotification () {
             var myNotification = new Notify('Há café sendo feito!', {
-                body: "Responsável: ",
+                body: "Opa",
                 tag: 'My unique id',
                 notifyShow: onShowNotification,
                 notifyClose: onCloseNotification,
@@ -42,6 +42,16 @@
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
+            var userNotification = new Notify('Há café sendo feito!', {
+                body: "Responsável:" + userName,
+                tag: 'idResponsavel',
+                notifyShow: onShowNotification,
+                notifyClose: onCloseNotification,
+                notifyClick: onClickNotification,
+                notifyError: onErrorNotification,
+                timeout: 4
+            });
+            userNotification.show();
         });
     });
 </script>
