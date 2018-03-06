@@ -45,9 +45,11 @@ function checkUsers(data, rfid){
     return userName != "" ? userName : "Não encontrado";
 }
 
-// app.get('/', function(req, res){
-//     res.render('index', {rfid: msg});
-// });
+app.get('/', function(req, res){
+    if (msg != ''){
+        res.render('index', {rfid: msg});
+    }
+});
 
 var conections = 0;
 io.sockets.on('connection', function(socket){
