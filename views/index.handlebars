@@ -14,14 +14,14 @@
         }
         function onPermissionGranted () {
             console.log('Permission has been granted by the user');
-            doNotification();
+            //doNotification();
         }
         function onPermissionDenied () {
             console.warn('Permission has been denied by the user');
         }
         function doNotification () {
             var myNotification = new Notify('Há café sendo feito!', {
-                body: 'Tempo: ',
+                body: "Responsável: ",
                 tag: 'My unique id',
                 notifyShow: onShowNotification,
                 notifyClose: onCloseNotification,
@@ -42,6 +42,7 @@
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
+            doNotification();
         });
     });
 </script>
