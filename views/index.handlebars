@@ -38,7 +38,7 @@
         }
     });
 
-    $(function () {   
+    $(function () {
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);

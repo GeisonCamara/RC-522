@@ -36,7 +36,7 @@ console.log(path.join(__dirname, '/node_modules/jquery/dist'));
 console.log(path.join(__dirname, '/node_modules/notifyjs/dist'));
 
 function checkUsers(data, rfid){
-    //var userName = "";
+    var userName = "";
     for(var i = 0; i < data.users.length ; i++){
         if(data.users[i].rfid == rfid){
             userName =  data.users[i].nome;
@@ -45,9 +45,9 @@ function checkUsers(data, rfid){
     return userName != "" ? userName : "Não encontrado";
 }
 
-app.get('/', function(req, res){
-    res.render('index', {rfid: msg});
-});
+// app.get('/', function(req, res){
+//     res.render('index', {rfid: msg});
+// });
 
 var conections = 0;
 io.sockets.on('connection', function(socket){
