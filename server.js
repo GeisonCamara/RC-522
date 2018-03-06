@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 var express = require('express');
 var app = express();
 var exphbs = require('express-handlebars');
@@ -12,7 +12,7 @@ var helpers = require('./helpers/helpers');
 var id = 0;
 var msg = '';
 
-var server = http.createServer(app);
+var server = https.createServer(app);
 var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -61,5 +61,5 @@ rc522(function(rfidSerialNumber){
 });
 
 server.listen(port, function(){
-    console.log('Servidor iniciado: http://localhost:' + port);
+    console.log('Servidor iniciado: https://localhost:' + port);
 });
