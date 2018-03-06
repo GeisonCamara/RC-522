@@ -14,7 +14,7 @@
         }
         function onPermissionGranted () {
             console.log('Permission has been granted by the user');
-            //doNotification();
+            doNotification();
         }
         function onPermissionDenied () {
             console.warn('Permission has been denied by the user');
@@ -42,7 +42,6 @@
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
-            doNotification();
         });
     });
 </script>
