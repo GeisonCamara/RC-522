@@ -1,5 +1,14 @@
 <script>
     $(document).ready(function () {
+        function onShowNotification () {
+            console.log('notification is shown!');
+        }
+        function onCloseNotification () {
+            console.log('notification is closed!');
+        }
+        function onClickNotification () {
+            console.log('notification was clicked!');
+        }
         function onErrorNotification () {
             console.error('Error showing notification. You may need to request permission.');
         }
@@ -14,6 +23,8 @@
             var myNotification = new Notify('Usuário conectado!', {
                 body: "Olá",
                 tag: 'My unique id',
+                notifyShow: onShowNotification,
+                notifyClose: onCloseNotification,
                 notifyClick: onClickNotification,
                 notifyError: onErrorNotification,
                 timeout: 4
