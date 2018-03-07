@@ -15,7 +15,7 @@ var helpers = require('./helpers/helpers');
 var id = 0;
 var msg = '';
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
@@ -25,32 +25,32 @@ app.use('/js', express.static(path.join(__dirname, '/content')));
 console.log(path.join(__dirname, '/node_modules/jquery/dist'));
 console.log(path.join(__dirname, '/node_modules/notifyjs/dist'));
 
-function checkUsers(data, rfid){
+function checkUsers(data, rfid) {
     var userName = "";
-    for(var i = 0; i < data.users.length ; i++){
-        if(data.users[i].rfid == rfid){
-            userName =  data.users[i].nome;
+    for (var i = 0; i < data.users.length; i++) {
+        if (data.users[i].rfid == rfid) {
+            userName = data.users[i].nome;
         }
     }
     return userName != "" ? userName : "Não encontrado";
 }
 
-app.get('/', function(req, res){
-    res.render('index', {rfid: msg});
+app.get('/', function (req, res) {
+    res.render('index', { rfid: msg });
 });
 
 var PROD = false;
 var lex = require('greenlock-express').create({
-  server: PROD ? 'https://acme-v01.api.letsencrypt.org/directory' : 'staging',
-  approveDomains: (opts, certs, cb) => {
-    if (certs) {
-      opts.domains = ['coffelytics.com', 'coffelytics.com']
-    } else { 
-      opts.email = 'coffelytics@gmail.com'; 
-      opts.agreeTos = true;
+    server: PROD ? 'https://acme-v01.api.letsencrypt.org/directory' : 'staging',
+    approveDomains: (opts, certs, cb) => {
+        if (certs) {
+            opts.domains = ['coffelytics.com', 'coffelytics.com']
+        } else {
+            opts.email = 'coffelytics@gmail.com';
+            opts.agreeTos = true;
+        }
+        cb(null, { options: opts, certs: certs });
     }
-    cb(null, { options: opts, certs: certs });
-  }
 });
 var middlewareWrapper = lex.middleware;
 
@@ -61,16 +61,16 @@ var server = https.createServer(
 var io = require('socket.io').listen(server);
 
 var conections = 0;
-io.sockets.on('connection', function(socket){
+io.sockets.on('connection', function (socket) {
     console.log('Usuários conectados: ' + (++conections));
-    socket.on('disconnect', function(){
+    socket.on('disconnect', function () {
         console.log('Usuários conectados: ' + (--conections));
     });
 });
 
-rc522(function(rfidSerialNumber){
-    jsonfile.readFile(db, function(err, data){
-        if(err) throw err;
+rc522(function (rfidSerialNumber) {
+    jsonfile.readFile(db, function (err, data) {
+        if (err) throw err;
         id = rfidSerialNumber;
         msg = checkUsers(data, id);
         io.sockets.emit('read rfid', msg);
@@ -81,6 +81,6 @@ rc522(function(rfidSerialNumber){
     });
 });
 
-server.listen(port, function(){
-    console.log('Servidor iniciado: http://localhost:' + port);
+server.listen(port, function () {
+    console.log('Servidor iniciado: https://localhost:' + port);
 });
