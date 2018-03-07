@@ -1,13 +1,13 @@
-//var http = require('http');
-var https = require('https');
+var http = require('http');
+// var https = require('https');
 var express = require('express');
 var app = express();
 var fs = require('fs');
-var options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/example.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/example.com/cert.pem'),
-    ca: fs.readFileSync('/etc/letsencrypt/live/example.com/chain.pem')
-  };
+// var options = {
+//     key: fs.readFileSync('/etc/letsencrypt/live/example.com/privkey.pem'),
+//     cert: fs.readFileSync('/etc/letsencrypt/live/example.com/cert.pem'),
+//     ca: fs.readFileSync('/etc/letsencrypt/live/example.com/chain.pem')
+//   };
 
 var exphbs = require('express-handlebars');
 var path = require('path');
