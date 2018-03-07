@@ -20,8 +20,9 @@
             console.warn('Permission has been denied by the user');
         }
         function doNotification () {
-            var myNotification = new Notify('Usuário conectado!',{
+            var myNotification = new Notification('Usuário conectado!',{
                 body: "Olá",
+                icon: 'bot.png',
                 tag: 'My unique id',
                 notifyShow: onShowNotification,
                 notifyClose: onCloseNotification,
