@@ -1,19 +1,8 @@
-var http = require('https');
+var http = require('http');
+var https = require('https');
 var express = require('express');
 var app = express();
 var fs = require('fs');
-// var options = {
-//     key: fs.readFileSync('/etc/letsencrypt/live/example.com/privkey.pem'),
-//     cert: fs.readFileSync('/etc/letsencrypt/live/example.com/cert.pem'),
-//     ca: fs.readFileSync('/etc/letsencrypt/live/example.com/chain.pem')
-//   };
-
-var sslPath = '/etc/letsencrypt/live/yourdomain.example.com/';
-
-var options = {  
-    key: fs.readFileSync(sslPath + 'privkey.pem'),
-    cert: fs.readFileSync(sslPath + 'fullchain.pem')
-};
 
 var exphbs = require('express-handlebars');
 var path = require('path');
@@ -25,9 +14,6 @@ var helpers = require('./helpers/helpers');
 
 var id = 0;
 var msg = '';
-
-var server = https.createServer(options, this.app);
-var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -52,6 +38,27 @@ function checkUsers(data, rfid){
 app.get('/', function(req, res){
     res.render('index', {rfid: msg});
 });
+
+var PROD = false;
+var lex = require('greenlock-express').create({
+  server: PROD ? 'https://acme-v01.api.letsencrypt.org/directory' : 'staging',
+  approveDomains: (opts, certs, cb) => {
+    if (certs) {
+      opts.domains = ['coffelytics.com', 'coffelytics.com']
+    } else { 
+      opts.email = 'coffelytics@gmail.com'; 
+      opts.agreeTos = true;
+    }
+    cb(null, { options: opts, certs: certs });
+  }
+});
+var middlewareWrapper = lex.middleware;
+
+var server = https.createServer(
+    lex.httpsOptions,
+    middlewareWrapper(handler)
+);
+var io = require('socket.io').listen(server);
 
 var conections = 0;
 io.sockets.on('connection', function(socket){
