@@ -42,9 +42,10 @@
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
-            var userNotification = new Notify('Há café sendo feito!',{
+            var userNotification = new Notification('Há café sendo feito!',{
                 body: "Responsável: " + userName,
                 tag: 'idResponsavel',
+                icon: 'bot.png',
                 timeout: 4
             });
             userNotification.show();
