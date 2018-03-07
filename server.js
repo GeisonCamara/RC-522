@@ -56,7 +56,7 @@ var middlewareWrapper = lex.middleware;
 
 var server = https.createServer(
     lex.httpsOptions,
-    middlewareWrapper(handler)
+    middlewareWrapper(app)
 );
 var io = require('socket.io').listen(server);
 
