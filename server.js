@@ -1,5 +1,4 @@
-var http = require('http');
-// var https = require('https');
+var http = require('https');
 var express = require('express');
 var app = express();
 var fs = require('fs');
@@ -8,6 +7,13 @@ var fs = require('fs');
 //     cert: fs.readFileSync('/etc/letsencrypt/live/example.com/cert.pem'),
 //     ca: fs.readFileSync('/etc/letsencrypt/live/example.com/chain.pem')
 //   };
+
+var sslPath = '/etc/letsencrypt/live/yourdomain.example.com/';
+
+var options = {  
+    key: fs.readFileSync(sslPath + 'privkey.pem'),
+    cert: fs.readFileSync(sslPath + 'fullchain.pem')
+};
 
 var exphbs = require('express-handlebars');
 var path = require('path');
@@ -20,7 +26,7 @@ var helpers = require('./helpers/helpers');
 var id = 0;
 var msg = '';
 
-var server = https.createServer(options, app);
+var server = https.createServer(options, this.app);
 var io = require('socket.io').listen(server);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
