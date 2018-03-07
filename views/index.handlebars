@@ -20,7 +20,7 @@
             console.warn('Permission has been denied by the user');
         }
         function doNotification () {
-            var myNotification = new Notify('Usuário conectado!', 'success', {
+            var myNotification = new Notify('Usuário conectado!', "error", {
                 body: "Olá",
                 tag: 'My unique id',
                 notifyShow: onShowNotification,
@@ -42,7 +42,7 @@
         var socket = io();
         socket.on('read rfid', function(userName){;
             $('#userName').html('').html(userName);
-            var userNotification = new Notify('Há café sendo feito!', {
+            var userNotification = new Notify('Há café sendo feito!', 'success', {
                 body: "Responsável: " + userName,
                 tag: 'idResponsavel',
                 timeout: 4
